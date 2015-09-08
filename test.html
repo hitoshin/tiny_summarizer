@@ -1,0 +1,21 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="tiny_segmenter-0.2.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="TinySummarizer.js" charset="UTF-8"></script>
+</head>
+<body>
+<script>
+    var segmenter = new TinySegmenter();
+    var sentences = ["私の名前は名前です。",
+                     "彼の名前は鈴木です。"];
+    var words = [];
+    for (var i = 0; i < sentences.length; i++) {
+        var segs = segmenter.segment(sentences[i]);
+        words[i] = segs;
+    }
+    var summarizer = new TinySummarizer();
+    output = summarizer.summarize(words, 10);
+    document.write(output);
+</script>
+</body>
