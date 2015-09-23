@@ -11,25 +11,28 @@
     <script type="text/javascript" src="javascripts/TinySummarizer.js" charset="UTF-8"></script>
     <script type="text/javascript" src="javascripts/TinySplitter.js" charset="UTF-8"></script>
     <script type="text/javascript">
+        var length;
+        var text   = "";
         function Restore() {
-            document.form.input_text.value = "東京都のJR東日本管内の線路などで相次いでいる不審火で、警視庁は9月15日に、8月23日のJR東日本品川変電所の不審火に関与した疑いで、東京都内に住む42歳の男を威力業務妨害の疑いで逮捕したと発表した。威力業務妨害の疑いで逮捕されたのは、東京都武蔵野市吉祥寺に住む自称ミュージシャンの野田伊佐也容疑者・42歳で、「やったことはやったが、業務を妨害したとは思っていない」と、警視庁に対して話している。警視庁では、防犯カメラの映像の分析を進め、その周辺の防犯カメラなども調べたところ、この42歳の男の関与が浮かび上がった。捜査関係者の話では、この42歳の男は8月23日20時頃に、品川区のJR東日本品川変電所の敷地内において、ペットボトルを燃やして、JR東日本の業務を妨害した疑いが持たれている。かつて野田容疑者が住んでいたアパートの近くに住む50代男性はサンケイスポーツの取材に「夜遅くや朝早く、部屋からロックが聞こえてきた」と話しているが「人付き合いもなさそうで目立つ感じではなかった」とも話している。東京都内のJR東日本管内においては、この8月以降、線路脇のケーブルや変電所において、あわせて7件の不審火が発生した。また、品川区にあるJR東日本品川変電所を含む、４か所の現場から、焼けていたペットボトルと針金が発見されている為、警視庁では一連の事件との関連についても捜査を進めている。";
-            document.form.length.value = 200;
+            document.form.length.value     = length;
+            document.form.input_text.value = text;
         }
         function Summarize() {
-            var length = document.form.length.value;
-            var text = document.form.input_text.value;
+            length = document.form.length.value;
+            text   = document.form.input_text.value;
+            
             var splitter  = new TinySplitter();
             var sentences = splitter.split(text);
             var segmenter = new TinySegmenter();
             var words = [];
             for (var i = 0; i < sentences.length; i++) {
-                var segs = segmenter.segment(sentences[i]);
-                words[i] = segs;
+                words[i] = segmenter.segment(sentences[i]);
             }
             var summarizer = new TinySummarizer();
             output = summarizer.summarize(words, length);
+            
+            document.form.length.value     = output.length;
             document.form.input_text.value = output;
-            document.form.length.value = output.length;
         }
     </script>
   </head>
@@ -58,15 +61,16 @@
 
         <h2><a id="概要" class="anchor" href="#概要" aria-hidden="true"><span class="octicon octicon-link"></span></a>概要</h2>
         <ul>
-            <li><a href="http://hitoshin.github.io/tiny_summarizer/" target="_blank">TinySummarizer</a> は自動要約プログラムです。</li>
-            <li>詳しくは <a href="https://github.com/hitoshin/tiny_summarizer/blob/master/README.ja.md" target="_blank">README.ja.md</a> をご覧ください。</li>
+            <li><a href="https://github.com/hitoshin/tiny_summarizer" target="_blank">TinySummarizer</a> は自動要約プログラムです。</li>
+            <li>詳しくは <a href="https://github.com/hitoshin/tiny_summarizer/blob/master/README.md" target="_blank">README.md</a> をご覧ください。</li>
         </ul>
         <h2><a id="特徴" class="anchor" href="#特徴" aria-hidden="true"><span class="octicon octicon-link"></span></a>特徴</h2>
         <ul>
-            <li><a href="http://hitoshin.github.io/tiny_summarizer/" target="_blank">TinySummarizer</a> は自動要約プログラム <a href="https://github.com/hitoshin/shuca" target="_blank">Shuca</a> を JavaScript に移植したものです。</li>
+            <li><a href="https://github.com/hitoshin/tiny_summarizer" target="_blank">TinySummarizer</a> は自動要約プログラム <a href="https://github.com/hitoshin/shuca" target="_blank">Shuca</a> を JavaScript に移植したものです。</li>
             <li>HTML 文書などから本文抽出されたテキストを対象に要約を行うことを想定しています。そのため、 <a href="https://github.com/hitoshin/shuca" target="_blank">Shuca</a> とは異なり、様々な文書ドメインにおいて比較的頑健であると思われる単語頻度のみを用いて重要文の抽出を行っています。</li>
             <li><a href="http://chasen.org/~taku/software/TinySegmenter/" target="_blank">TinySegmenter</a> による前処理を想定しているため、品詞による内容語と機能語の選別を行っておらず、内部に保持したストップ・ワードのリストに基づいて重要文の抽出に利用する単語の選別を行います。</li>
-            <li><a href="http://chasen.org/~taku/software/TinySegmenter/" target="_blank">TinySegmenter</a> と <a href="http://hitoshin.github.io/tiny_summarizer/" target="_blank">TinySummarizer</a> によって完全にクライアント・サイドのみで自動要約処理が可能です。</li>
+            <li><a href="http://chasen.org/~taku/software/TinySegmenter/" target="_blank">TinySegmenter</a> と <a href="https://github.com/hitoshin/tiny_summarizer/" target="_blank">TinySummarizer</a> によって完全にクライアント・サイドのみで自動要約処理が可能です。</li>
+            <li>文分割用に簡単な文分割器を同梱しています。</li>
         </ul>
         <h2><a id="デモ" class="anchor" href="#デモ" aria-hidden="true"><span class="octicon octicon-link"></span></a>デモ</h2>
         <form name="form">
@@ -77,7 +81,7 @@
             <input onclick="Restore()"   type="button" value="元のテキストに戻す">
         </form>
         <h2><a id="その他" class="anchor" href="#その他" aria-hidden="true"><span class="octicon octicon-link"></span></a>その他</h2>
-        <p>詳しくは <a href="https://github.com/hitoshin/tiny_summarizer/blob/master/README.ja.md" target="_blank">README.ja.md</a>  を参照してください。</p>
+        <p>詳しくは <a href="https://github.com/hitoshin/tiny_summarizer/blob/master/README.md" target="_blank">README.md</a>  を参照してください。</p>
       </section>
     </div>
 
