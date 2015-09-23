@@ -1,0 +1,42 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="tiny_segmenter-0.2.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="TinySummarizer.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="TinySplitter.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        var length;
+        var text = "";
+        function Restore() {
+            document.form.length.value = length;
+            document.form.input_text.value = text;
+        }
+        function Summarize() {
+            length = document.form.length.value;
+            text   = document.form.input_text.value;
+            var words  = [];
+            
+            var splitter  = new TinySplitter();
+            var sentences = splitter.split(text);
+            var segmenter = new TinySegmenter();
+            for (var i = 0; i < sentences.length; i++) {
+                words[i] = segmenter.segment(sentences[i]);
+            }
+            var summarizer = new TinySummarizer();
+            output = summarizer.summarize(words, length);
+            
+            document.form.length.value     = output.length;
+            document.form.input_text.value = output;
+        }
+    </script>
+</head>
+<body>
+<form name="form">
+    要約するテキスト：<br>
+    <textarea name="input_text" rows="20" cols="100">東京都のJR東日本管内の線路などで相次いでいる不審火で、警視庁は9月15日に、8月23日のJR東日本品川変電所の不審火に関与した疑いで、東京都内に住む42歳の男を威力業務妨害の疑いで逮捕したと発表した。威力業務妨害の疑いで逮捕されたのは、東京都武蔵野市吉祥寺に住む自称ミュージシャンの野田伊佐也容疑者・42歳で、「やったことはやったが、業務を妨害したとは思っていない」と、警視庁に対して話している。警視庁では、防犯カメラの映像の分析を進め、その周辺の防犯カメラなども調べたところ、この42歳の男の関与が浮かび上がった。捜査関係者の話では、この42歳の男は8月23日20時頃に、品川区のJR東日本品川変電所の敷地内において、ペットボトルを燃やして、JR東日本の業務を妨害した疑いが持たれている。かつて野田容疑者が住んでいたアパートの近くに住む50代男性はサンケイスポーツの取材に「夜遅くや朝早く、部屋からロックが聞こえてきた」と話しているが「人付き合いもなさそうで目立つ感じではなかった」とも話している。東京都内のJR東日本管内においては、この8月以降、線路脇のケーブルや変電所において、あわせて7件の不審火が発生した。また、品川区にあるJR東日本品川変電所を含む、４か所の現場から、焼けていたペットボトルと針金が発見されている為、警視庁では一連の事件との関連についても捜査を進めている。</textarea><br>
+    要約の文字数：<input size="5" type="text" name="length" value="200" style="text-align: right;"><br>
+    <input onclick="Summarize()" type="button" value="要約する">
+    <input onclick="Restore()" type="button" value="元のテキストを復元する">
+</form>
+</body>
+</html>
