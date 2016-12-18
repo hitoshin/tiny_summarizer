@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript">
+        var length;
+        var output = "In the late 80s, Nintendo literally conquered the home video game console market. Having reflected that Atari was devastated due to its poor control of the quality of the games in its platform, Nintendo made a great effort to keep the quality of the games provided for its platform.";
+        var text = "";
+        function Restore() {
+            document.form.length.value = length;
+            document.form.input_text.value = text;
+            return;
+        }
+        function Sleep(T) {
+            var d1 = new Date().getTime(); 
+            var d2 = new Date().getTime();
+            while (d2 < d1 + 1000 * T) {
+                d2 = new Date().getTime();
+            }
+            return;
+        } 
+        function Summarize() {
+            length = document.form.length.value;
+            text = document.form.input_text.value;
+            Sleep(1);
+            document.form.input_text.value = output;
+            return;
+        }
+    </script>
+    <title>The Gist - Demonstration for IE</title>
+</head>
+<body>
+<form name="form">
+    <span style="font-size: 40px">Text:</span><br>
+    <textarea name="input_text" rows="15" cols=60" style="font-size: 30px">The early generations of home video game systems provide a story of an industry’s rise, fall, and rise again. The first systems which played multiple game cartridges were introduced in the late 1970s, and Atari Corporation emerged as the dominant game system manufacturer of the young industry. U.S. retail sales of home video games grew to $3 billion by 1982. Then the market suddenly collapsed, with sales plummeting to under $100 million in 1985. Home video games were quickly dismissed as yet another toy fad.2 At this depressed point in the industry, the Japanese company Nintendo optimistically launched a new video game system with improved graphics and game play. A series of hit games sparked explosive sales in both Japan and the United States, and “Nintendomania” had begun. By 1990, home video games had become a $5 billion worldwide business with Nintendo the clear industry leader. In fact, Nintendo’s position was so dominant that it inspired journalist David Sheff to title his early 1990s book Game Over: How Nintendo Conquered the World. (See Exhibit 1 for financial summary of Nintendo during period spanning between 1984 and 1992.) Nintendo, based in Kyoto, Japan, was controlled by the old, established Yamauchi family. In the early part of this century, the company was the largest maker of Japanese playing-cards, introducing Western-style cards and building a sales force that called on shops all over Japan. In 1959, Nintendo entered a licensing agreement with Walt Disney to produce cards backed with pictures of Mickey Mouse and other Disney characters. In the late 1960s, the company began putting out a series of toys, including mechanical hands, pitching machines, periscopes, and a shooting game that used a light beam and solar cells. The next move was converting former bowling alleys into shooting ranges that used the company's light beam/solar cell technology. Finding his company overextended in the wake of the 1973 oil crisis, Yamauchi looked around for new business opportunities. He acquired a license to manufacture and sell Magnavox's home video game system in Japan and, in 1977, teamed up with electronics giant Mitsubishi to launch a machine that played variations on Pong. The following year, Nintendo started putting out coin-op video games. In 1981, Nintendo had its first smash hit with the coin-op video game Donkey Kong, designed by ace Nintendo designer Sigeru Miyamoto.</textarea><br>
+    <span style="font-size:30px">Summary Length (Words):</span> <input size="5" type="text" name="length" value="50" style="font-size: 30px; text-align: right;"><br>
+    <input onclick="Summarize()" type="button" value="The Gist" style="font-size: 40px">
+    <input onclick="Restore()" type="button" value="Restore" style="font-size: 40px">
+</form>
+</body>
+</html>
