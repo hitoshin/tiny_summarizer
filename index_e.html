@@ -1,0 +1,63 @@
+<html>
+<head>
+	<title>The Gist</title>
+    <script type="text/javascript" src="javascripts/Segmenter_e.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="javascripts/TinySummarizer_e.js" charset="UTF-8"></script>
+    <script type="text/javascript" src="javascripts/TinySplitter_e.js" charset="UTF-8"></script>
+    <script type="text/javascript">
+        var length;
+        var text   = "";
+        function Restore() {
+            document.form.length.value     = length;
+            document.form.input_text.value = text;
+        }
+        function Summarize() {
+        	keywords = [];
+            length   = document.form.length.value;
+            text     = document.form.input_text.value;
+
+            keywords[0] = document.form.keyword0.value;
+            keywords[1] = document.form.keyword1.value;
+            keywords[2] = document.form.keyword2.value;
+
+            var splitter  = new TinySplitter();
+            var sentences = splitter.split(text);
+            var segmenter = new Segmenter();
+            var words = [];
+            for (var i = 0; i < sentences.length; i++) {
+                words[i] = segmenter.segment(sentences[i]);
+            }
+            var summarizer = new TinySummarizer();
+            output = summarizer.summarize(keywords, length, sentences, words);
+            
+            document.form.input_text.value = output;
+            document.form.length.value     = output.split(" ").length - 1;
+            //document.form.input_text.value = words;
+        }
+    </script>
+</head>
+<body>
+<div style="position:absolute; top:10px; left:100px;">
+    <h1 style="font-family: Helvetica;">The Gist</h1> 
+</div>
+<div style="position:absolute; top:10px; left:250px;">
+    <image src="image/tree.png" height="80px" width="80px">
+</div>
+<form name="form">
+	<div style="position:absolute; top:100px; left:100px;">
+		<textarea name="input_text" style="font-size:14px; height:300px; width:400px;">Britain's communications intelligence agency GCHQ has issued a statement denying it wiretapped Donald Trump during the US presidential campaign. The unusual move by the agency came after White House Press Secretary Sean Spicer cited claims first made on US TV channel Fox News earlier this week. GCHQ responded by saying the allegations were "nonsense, utterly ridiculous and should be ignored". Mr Trump has claimed that Trump Tower in New York was under surveillance. But he has provided no evidence for the claim. A Senate committee on Thursday concluded that there were "no indications" Trump Tower was under surveillance by the US government before or after the election. The claims of GCHQ involvement were initially made by former judge Andrew Napolitano. Mr Spicer quoted Mr Napolitano as saying: "Three intelligence sources have informed Fox News that President Obama went outside the chain of command". "He didn't use the NSA, he didn't use the CIA, he didn't use the FBI and he didn't use the Department of Justice, he used GCHQ". A GCHQ spokesman said: "Recent allegations made by media commentator Judge Andrew Napolitano about GCHQ being asked to conduct 'wiretapping' against the then president-elect are nonsense".</textarea><br>
+		<input onclick="Summarize()" type="button" value="Summarize">
+		<input onclick="Restore()" type="button" value="Restore">
+	</div>
+	<div style="position:absolute; top:100px; left:530px;">
+		Keywords:<br>
+		<input type="text" name="keyword0"><br>
+		<input type="text" name="keyword1"><br>
+		<input type="text" name="keyword2"><br>
+		<br>
+		Length (# of words):<br>
+		<input type="text" name="length" value="100" style="text-align:right;"><br>
+	</div>
+</form>
+</body>
+</html>
